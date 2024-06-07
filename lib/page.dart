@@ -107,24 +107,17 @@ class _BookmarkPageState extends State<BookmarkPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
-        child: AppBar(
-          flexibleSpace: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: Text(
-                'BOOKMARK',
-                style: TextStyle(
-                  fontSize: 36,
-                  fontFamily: 'Rubik Mono One',
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+      appBar: AppBar(
+        title: Text(
+          'BOOKMARK',
+          style: TextStyle(
+            fontSize: 36,
+            fontFamily: 'Rubik Mono One',
+            color: Color(0xFF333333),
+            letterSpacing: 10.0,
           ),
         ),
+        backgroundColor: Colors.transparent,
       ),
       body: ListView.builder(
         itemCount: bookmarks.length,
