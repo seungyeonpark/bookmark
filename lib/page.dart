@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import 'web.dart';
 
 class BookmarkPage extends StatefulWidget {
@@ -13,6 +15,12 @@ class _BookmarkPageState extends State<BookmarkPage> {
   bool _isTitleValid = true;
   bool _isLinkValid = true;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadBookmarks();
+  }
+
   void _addBookmark(String title, String link) {
     setState(() {
       _isTitleValid = title.isNotEmpty;
@@ -22,6 +30,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
     if (_isTitleValid && _isLinkValid) {
       setState(() {
         bookmarks.add({'title': title, 'link': link});
+        _saveBookmarks();
       });
       Navigator.pop(context);
     }
@@ -64,6 +73,24 @@ class _BookmarkPageState extends State<BookmarkPage> {
         builder: (context) => WebViewPage(url: url),
       ),
     );
+  }
+
+  void _saveBookmarks() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> bookmarksStringList = bookmarks.map((bookmark) => jsonEncode(bookmark)).toList();
+    await prefs.setStringList('bookmarks', bookmarksStringList);
+  }
+
+  void _loadBookmarks() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? bookmarksStringList = prefs.getStringList('bookmarks');
+    if (bookmarksStringList != null) {
+      setState(() {
+        bookmarks = bookmarksStringList
+            .map((bookmarkString) => Map<String, String>.from(jsonDecode(bookmarkString)))
+            .toList();
+      });
+    }
   }
 
   @override
