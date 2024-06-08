@@ -11,7 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_inappwebview: ^5.7.2+3
+  flutter_inappwebview: ^6.0.0
+  shared_preferences: ^2.2.3
 
   cupertino_icons: ^1.0.2
 
