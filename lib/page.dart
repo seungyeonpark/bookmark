@@ -33,63 +33,25 @@ class _BookmarkPageState extends State<BookmarkPage> {
     });
   }
 
-  void _showAddBookmarkModal(BuildContext context) {
-    _titleController.clear();
-    _linkController.clear();
-    setState(() {
-      _isTitleValid = true;
-      _isLinkValid = true;
-    });
+  void _showAddBookmarkModal(BuildContext context, {bool keepValidationState = false}) {
+    if (!keepValidationState) {
+      _titleController.clear();
+      _linkController.clear();
+
+      setState(() {
+        _isTitleValid = true;
+        _isLinkValid = true;
+      });
+    }
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                TextField(
-                  controller: _titleController,
-                  decoration: InputDecoration(
-                    labelText: 'Title',
-                    errorText: !_isTitleValid ? 'Please enter a title' : null,
-                  ),
-                  style: TextStyle(fontFamily: 'Rubik-Light'),
-                ),
-                SizedBox(height: 10),
-                TextField(
-                  controller: _linkController,
-                  decoration: InputDecoration(
-                    labelText: 'Link',
-                    errorText: !_isLinkValid ? 'Please enter a link' : null,
-                  ),
-                  style: TextStyle(fontFamily: 'Rubik-Light'),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    _addBookmark(_titleController.text, _linkController.text);
-                  },
-                  child: Text('Add Bookmark', style: TextStyle(fontFamily: 'Rubik-Light')),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    side: BorderSide(color: Colors.black87),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    shadowColor: Colors.black54,
-                    elevation: 4,
-                  ),
-                ),
-              ],
-            ),
-          ),
+        return AddBookmarkModal(
+          titleController: _titleController,
+          linkController: _linkController,
+          onAddBookmark: _addBookmark,
         );
       },
     );
@@ -191,6 +153,122 @@ class _BookmarkPageState extends State<BookmarkPage> {
           size: 52.0,
           color: Color(0xFF333333),
         ),
+      ),
+    );
+  }
+}
+
+class AddBookmarkModal extends StatelessWidget {
+  final TextEditingController titleController;
+  final TextEditingController linkController;
+  final Function(String, String) onAddBookmark;
+
+  const AddBookmarkModal({
+    Key? key,
+    required this.titleController,
+    required this.linkController,
+    required this.onAddBookmark,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: AddBookmarkForm(
+        titleController: titleController,
+        linkController: linkController,
+        onAddBookmark: onAddBookmark,
+      ),
+    );
+  }
+}
+
+class AddBookmarkForm extends StatefulWidget {
+  final TextEditingController titleController;
+  final TextEditingController linkController;
+  final Function(String, String) onAddBookmark;
+
+  const AddBookmarkForm({
+    Key? key,
+    required this.titleController,
+    required this.linkController,
+    required this.onAddBookmark,
+  }) : super(key: key);
+
+  @override
+  _AddBookmarkFormState createState() => _AddBookmarkFormState();
+}
+
+class _AddBookmarkFormState extends State<AddBookmarkForm> {
+  bool isTitleValid = true;
+  bool isLinkValid = true;
+
+  void _updateErrorLabel(bool isTitleEmpty, bool isLinkEmpty) {
+    setState(() {
+      isTitleValid = !isTitleEmpty;
+      isLinkValid = !isLinkEmpty;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          TextField(
+            controller: widget.titleController,
+            decoration: InputDecoration(
+              labelText: 'title',
+            ),
+            style: TextStyle(
+              fontFamily: 'Rubik-Light',
+              color: Color(0xFF333333),
+            ),
+          ),
+          if (!isTitleValid)
+            Text(
+                'Please enter a title'
+            ),
+          SizedBox(height: 10),
+          TextField(
+            controller: widget.linkController,
+            decoration: InputDecoration(
+              labelText: 'link',
+            ),
+            style: TextStyle(
+              fontFamily: 'Rubik-Light',
+              color: Color(0xFF333333),
+            ),
+          ),
+          if (!isLinkValid)
+            Text(
+                'Please enter a link'
+            ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              bool isTitleEmpty = widget.titleController.text.isEmpty;
+              bool isLinkEmpty = widget.linkController.text.isEmpty;
+
+              if (isTitleEmpty || isLinkEmpty) {
+                _updateErrorLabel(isTitleEmpty, isLinkEmpty);
+              } else {
+                widget.onAddBookmark(widget.titleController.text, widget.linkController.text);
+              }
+            },
+            child: Text(
+              'Add Bookmark',
+              style: TextStyle(
+                fontFamily: 'Rubik-Light',
+                color: Color(0xFF333333),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
