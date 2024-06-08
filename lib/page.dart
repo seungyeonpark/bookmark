@@ -108,16 +108,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'BOOKMARK',
-          style: TextStyle(
-            fontSize: 36,
-            fontFamily: 'Rubik Mono One',
-            color: Color(0xFF333333),
-            letterSpacing: 10.0,
-          ),
-        ),
-        backgroundColor: Colors.transparent,
+        title: Text('BOOKMARK'),
       ),
       body: ListView.builder(
         itemCount: bookmarks.length,
@@ -131,8 +122,8 @@ class _BookmarkPageState extends State<BookmarkPage> {
                     bookmarks[index]['title']!,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.black87,
                       fontFamily: 'Rubik-Light',
+                      color: Color(0xFF333333),
                     ),
                   ),
                 ),
@@ -142,21 +133,45 @@ class _BookmarkPageState extends State<BookmarkPage> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Delete Bookmark'),
-                        content: Text('Do you want to delete this bookmark?'),
+                        title: Text(
+                          'Delete Bookmark',
+                          style: TextStyle(
+                            fontFamily: 'Rubik-Light',
+                            color: Color(0xFF333333),
+                          ),
+                        ),
+                        content: Text(
+                          'Do you want to delete this bookmark?',
+                          style: TextStyle(
+                            fontFamily: 'Rubik-Light',
+                            color: Color(0xFF333333),
+                          ),
+                        ),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text('Cancel', style: TextStyle(color: Colors.black54)),
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                fontFamily: 'Rubik-Light',
+                                color: Color(0xFF333333),
+                              ),
+                            ),
                           ),
                           TextButton(
                             onPressed: () {
                               _removeBookmark(index);
                               Navigator.of(context).pop();
                             },
-                            child: Text('Delete', style: TextStyle(color: Colors.black87)),
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(
+                                fontFamily: 'Rubik-Light',
+                                color: Color(0xFF333333),
+                              ),
+                            ),
                           ),
                         ],
                       );
@@ -171,13 +186,10 @@ class _BookmarkPageState extends State<BookmarkPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddBookmarkModal(context),
         tooltip: 'Add Bookmark',
-        child: Icon(Icons.add),
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black87,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: Colors.black87),
+        child: Icon(
+          Icons.add_circle,
+          size: 52.0,
+          color: Color(0xFF333333),
         ),
       ),
     );

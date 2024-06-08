@@ -16,69 +16,59 @@ class MyApp extends StatelessWidget {
   ThemeData _buildThemeData() {
     return ThemeData(
       brightness: Brightness.light,
-      primarySwatch: Colors.grey,
+      primaryColor: Color(0xFF333333),
       scaffoldBackgroundColor: Color(0xFFF5F5F5),
       appBarTheme: AppBarTheme(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF333333),
         elevation: 0,
         centerTitle: true,
-        toolbarHeight: 100,
+        toolbarHeight: 85,
         titleTextStyle: TextStyle(
-          color: Colors.black87,
           fontSize: 36,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'Rubik Mono One',
+          fontFamily: 'Rubik-Light',
+          color: Color(0xFFF5F5F5),
+          letterSpacing: 10.0,
         ),
-        iconTheme: IconThemeData(color: Colors.black87),
+        iconTheme: IconThemeData(
+          color: Color(0xFFF5F5F5),
+        ),
       ),
       textTheme: TextTheme(
-        bodyMedium: TextStyle(
-          fontFamily: 'Rubik-Light',
-          color: Colors.black87,
-        ),
+          titleMedium: TextStyle(
+            fontFamily: 'Rubik-Light',
+            color: Color(0xFF333333),
+          )
       ),
       cardTheme: CardTheme(
-        color: Colors.white,
+        color: Color(0xFFF5F5F5),
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
       dialogTheme: DialogTheme(
-        backgroundColor: Colors.white,
-        titleTextStyle: TextStyle(color: Colors.black87),
-        contentTextStyle: TextStyle(color: Colors.black54),
+        backgroundColor: Color(0xFFF5F5F5),
+        titleTextStyle: TextStyle(color: Color(0xFF333333)),
+        contentTextStyle: TextStyle(color: Color(0xFF333333)),
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black54),
+          borderSide: BorderSide(color: Color(0xFF333333)),
           borderRadius: BorderRadius.circular(8),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black54),
+          borderSide: BorderSide(color: Color(0xFF333333)),
           borderRadius: BorderRadius.circular(8),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black87),
+          borderSide: BorderSide(color: Color(0xFF333333)),
           borderRadius: BorderRadius.circular(8),
-        ),
-        labelStyle: TextStyle(color: Colors.black54),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          foregroundColor: Colors.black87,
-          side: BorderSide(color: Colors.black87),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          shadowColor: Colors.black54,
-          elevation: 4,
         ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black87,
+        foregroundColor: Color(0xFF333333),
+        elevation: 0,
       ),
     );
   }
